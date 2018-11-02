@@ -1,0 +1,57 @@
+@import 'utils/tools';
+@import 'view/index';
+@import 'view/top-bar';
+@import 'view/board';
+@import 'view/board-notification';
+@import 'view/player';
+@import 'view/lobby';
+@import 'view/chat';
+
+body{
+	background-image: radial-gradient(circle,#383737, darken(#383737, 15%));
+	font-family: "Helvetica Neue";
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	// overflow: hidden;
+}
+
+#main-container{
+	position: relative;
+}
+
+#app-wrapper{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#app-container{
+	margin-top: 50px;
+	width: 75%;
+
+	display: grid;
+	grid-template-columns: 20% auto 30%;
+	grid-template-rows: auto;
+	grid-column-gap: 20px;
+	justify-content: center;
+}
+
+#game-container{
+	position: relative;
+	border: 3px solid $boardColor;
+	border-radius: 5px !important;
+}
+
+#footer{
+	position: fixed;
+	bottom: 10px;
+	width: 100%;
+	text-align: center;
+	color: $boardColor;
+	font-family: Courier;
+	font-size: 0.9em;
+}

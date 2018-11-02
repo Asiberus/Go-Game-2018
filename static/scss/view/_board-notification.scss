@@ -1,0 +1,242 @@
+
+@keyframes show_board_notification{
+	from{opacity: 0; margin-top:-150px}
+	to{opacity: 1; margin-top: 0px}
+}
+
+@keyframes hide_board_notification{
+	from{opacity: 1; margin-top: 0px}
+	to{opacity: 0; margin-top: 500px}
+}
+
+@keyframes move_notification_message{
+	0% {margin-top: 0px}
+	50% {margin-top: 30px}
+	100% {margin-top: 0px}
+}
+
+
+#board-notification-container{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 50;
+	border-radius: 5px !important;
+	overflow: hidden;
+	transition: background-color .2s;
+
+	&[show=true]{
+		animation: fadeIn .3s ease-in-out forwards;
+		-webkit-animation: fadeIn .3s ease-in-out forwards;
+	}
+
+	&[show=false]{
+		animation: fadeOut .3s ease-in-out forwards;
+		-webkit-animation: fadeOut .3s ease-in-out forwards;
+	}
+
+	&[gameFinished=true]{
+		background-color: transparentize(darken($boardColor, 50%), 0.5);
+	}
+
+	&[gameFinished=false]{
+		background-color: rgba(0,0,0,0.4);
+	}
+}
+
+#board-notification{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+
+	&[show=true]{
+		animation: show_board_notification .3s ease-in-out forwards;
+		-webkit-animation: show_board_notification .3s ease-in-out forwards;
+	}
+
+	&[show=false]{
+		animation: hide_board_notification .3s ease-in-out forwards;
+		-webkit-animation: hide_board_notification .3s ease-in-out forwards;
+	}
+
+	#board-notification-message{
+		font-size: 4.2em;
+		font-weight: bold;
+		font-style: italic;
+		text-align: center;
+		color: lighten($lineColor, 5%);
+		margin-bottom: 35px;
+
+		@include userSelectNone();
+
+		&[action=move]{
+			animation: move_notification_message 5s ease-in-out infinite;
+			-webkit-animation: move_notification_message 5s ease-in-out infinite;
+		}
+
+		&[action=stop]{
+			animation: none !important;
+			-webkit-animation: none !important;
+		}
+	}
+
+	#board-notification-counter{
+		display: none;
+		width: 90%;
+		margin: 15px 0px 30px 0px;
+		justify-content: center;
+
+		&:first-child{
+			margin-right: 50px;
+		}
+
+		.player-counter-container{
+			width: 50%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			.player-color{
+				width: 60px;
+				height: 60px;
+				margin-bottom: 10px;
+				display: inline-block;
+				position: relative;
+
+				&:after{
+					margin: auto;
+					position: absolute;
+					top: 0; left: 0; bottom: 0; right: 0;
+					content: "";
+					width: 100%;
+					height: 1px;
+				}
+
+				&[color=black]:after{
+					@include blackStone();
+				}
+
+				&[color=white]:after{
+					@include whiteStone();
+				}
+			}
+
+			.player-name{
+				color: $lineColor;
+				font-weight: bold;
+				font-size: 2.5em;
+			}
+
+			.player-score{
+				color: $lineColor;
+				font-weight: bold;
+				font-size: 3.2em;
+			}
+		}
+
+
+	}
+
+
+	#board-notification-btn-container{
+		&[button_display=none]{
+			display: none;
+		}
+
+		&[button_display=white-black]{
+			display: flex;
+
+			#notification-white-btn, #notification-black-btn{
+				display: block;
+			}
+
+			#notification-confirm-btn, #notification-cancel-btn, #notification-lobby-btn{
+				display: none;
+			}
+		}
+
+		&[button_display=confirm-cancel]{
+			display: flex;
+
+			#notification-confirm-btn, #notification-cancel-btn{
+				display: block;
+			}
+
+			#notification-white-btn, #notification-black-btn, #notification-lobby-btn{
+				display: none;
+			}
+		}
+
+		&[button_display=back-to-lobby]{
+			display: flex;
+
+			#notification-lobby-btn{
+				display: block;
+			}
+
+			#notification-white-btn, #notification-black-btn, #notification-confirm-btn, #notification-cancel-btn{
+				display: none;
+			}
+		}
+
+		.board-notification-btn{
+			height: 60px;
+			width: 150px;
+			border: 0;
+			border-radius: 4px;
+			font-size: 1.4em;
+			font-weight: bold;
+			cursor: pointer;
+			transition: all .2s;
+
+			&:not(#notification-lobby-btn):hover{
+				font-size: 1.6em;
+			}
+
+			&#notification-white-btn, &#notification-confirm-btn{
+				margin-right: 20px;
+				background-color: white;
+				color: black;
+
+				&:active{
+					background-color: darken(white, 30%);
+				}
+			}
+
+			&#notification-black-btn, &#notification-cancel-btn{
+				background-color: black;
+				color: white;
+
+				&:active{
+					background-color: lighten(black, 30%);
+				}
+			}
+
+			&#notification-lobby-btn{
+				background-color: lighten($lineColor, 10%);
+				color: $boardColor;
+				border: 4px solid lighten($lineColor, 10%);
+
+				&:hover{
+					background-color: $boardColor;
+					color: lighten($lineColor, 10%);
+				}
+
+				&:active{
+					background-color: darken($boardColor, 15%);
+				}
+
+				i.fas{
+					margin-left: 10px;
+				}
+			}
+		}
+	}
+}

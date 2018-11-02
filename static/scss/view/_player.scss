@@ -1,0 +1,174 @@
+
+@keyframes showPlayerContainer{
+	from {right: -350px}
+	to {right: 0px}
+}
+
+@keyframes hidePlayerContainer{
+	from {right: 0px}
+	to {right: -350px}
+}
+
+#player-container{
+	position: relative;
+	right: -350px;
+	justify-self: end;
+
+	&[show=true]{
+		animation: showPlayerContainer .4s ease-in-out forwards;
+		-webkit-animation: showPlayerContainer .4s ease-in-out forwards;
+	}
+
+	&[show=false]{
+		animation: hidePlayerContainer .4s ease-in-out forwards;
+		-webkit-animation: hidePlayerContainer .4s ease-in-out forwards;
+	}
+
+	.player{
+		width: 250px;
+		margin-bottom: 10px;
+		border: 3px solid;
+		border-radius: 3px !important;
+		transition: all .3s;
+
+		.player-title{
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			border-bottom: 3px solid;
+
+			.player-name{
+				text-align: center;
+			}
+
+			.player-color{
+				width: #{$cellSize - 5}px;
+				height: #{$cellSize - 4}px;
+				display: inline-block;
+				position: relative;
+
+				&:after{
+					margin: auto;
+					position: absolute;
+					top: 0; left: 0; bottom: 0; right: 0;
+					background-color: $lineColor;
+					content: "";
+					width: 100%;
+					height: 1px;
+				}
+			}
+		}
+
+		.player-info{
+
+			.nb-token-container{
+				width: 100%;
+				height: 45px;
+				padding: 10px;
+			}
+
+			#pass-button{
+				height: 35px;
+				background-color: $lineColor;
+				color: $boardColor;
+				border-top: 3px solid;
+				padding-top: 5px;
+				text-align: center;
+				font-weight: bold;
+				@include userSelectNone();
+				transition: all .1s;
+
+				&[active=true]{
+					cursor: pointer;
+				}
+
+				&[active=false]{
+					cursor: not-allowed;
+				}
+			}
+
+			#enemy-passed{
+				height: 0px;
+				background-color: $boardColor;
+				color: $lineColor;
+				border-top: 0px solid $lineColor;
+				text-align: center;
+				overflow: hidden;
+				font-weight: bold;
+				transition: all .2s;
+
+				&[hasPassed=true]{
+					height: 35px;
+					padding-top: 5px;
+					border-top-width: 3px;
+				}
+
+				&[hasPassed=false]{
+					height: 0px;
+					padding-top: 0px;
+					border-top: 0;
+				}
+			}
+		}
+	}
+}
+
+#player-container .player[isPlaying=true]{
+	background-color: $lineColor;
+	color: $boardColor;
+	border-color: $boardColor;
+
+	.player-title{
+		border-bottom-color: $boardColor;
+	}
+
+	.player-info{
+		#pass-button{
+			background-color: $lineColor;
+			border-bottom-color: $boardColor;
+			color: $boardColor;
+
+			&:hover{
+				background-color: lighten($boardColor, 10%);
+				border-top-color: lighten($boardColor, 10%);
+				color: $lineColor;
+			}
+		}
+	}
+}
+
+#player-container .player[isPlaying=false]{
+	background-color: $boardColor;
+	color: $lineColor;
+	border-color: $lineColor;
+
+	.player-title{
+		border-bottom-color: $lineColor;
+	}
+
+	.player-info{
+		#pass-button{
+			background-color: $boardColor;
+			border-top-color: $lineColor;
+			color: $lineColor;
+
+			&:hover{
+				background-color: rgba(0,0,0,0.3);
+				border-top-color: lighten($lineColor, 10%);
+				color: $boardColor;
+			}
+		}
+	}
+}
+
+#player-container .player[color=black] .player-color{
+	&:after{
+		@include blackStone();
+	}
+}
+
+#player-container .player[color=white] .player-color{
+	&:after{
+		@include whiteStone();
+	}
+}

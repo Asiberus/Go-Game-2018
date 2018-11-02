@@ -1,0 +1,332 @@
+
+
+@keyframes extend_list_user{
+	from {height: 0px; border-width: 0}
+	to {height: 420px; border-width: 3px}
+}
+
+@keyframes show_btn_container{
+	from {top: -70px}
+	to {top: 0px}
+}
+
+@keyframes hide_btn_container{
+	from {top: 0px}
+	to {top: -70px}
+}
+
+@keyframes move_lobby_notification{
+	0% {margin-top: 0px}
+	50% {margin-top: 15px}
+	100% {margin-top: 0px}
+}
+
+@keyframes add_list_user_item{
+	from {background-color: darken($boardColor, 15%)}
+	to {background-color: $boardColor}
+}
+
+
+#lobby-container{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 100;
+	background-color:$lineColor;
+	border-radius: 5px !important;
+	@include userSelectNone();
+
+	&[action="show"]{
+		animation: fadeIn .5s ease-in-out forwards;
+		-webkit-animation: fadeIn .5s ease-in-out forwards;
+	}
+
+	&[action="hide"]{
+		animation: fadeOut .5s ease-in-out forwards;
+		-webkit-animation: fadeOut .5s ease-in-out forwards;
+	}
+}
+
+
+#lobby-container{
+	#lobby{
+		width: 100%;
+		height: 100%;
+		display: grid;
+		grid-template-columns: 100%;
+		grid-template-rows: auto;
+		border-radius: 5px !important;
+
+		justify-content: center;
+		align-content: center;
+		z-index: 110;
+		@include userSelectNone();
+
+
+		#lobby-title{
+			font-family: Impact, Helvetica;
+			text-shadow: 5px 5px darken($lineColor, 10%);
+			text-align: center;
+			font-size: 6em;
+			transform: rotate(-3deg);
+			font-style: italic;
+			color: $boardColor;
+			cursor: pointer;
+			@include userSelectNone();
+
+			transition: all .2s ease;
+
+			&[list_extand=true]{
+				cursor: initial;
+				margin-top: -50px;
+				margin-bottom: 30px;
+			}
+
+			&:not([list_extand=true]):hover{
+				font-size: 6.5em;
+			}
+		}
+
+		#lobby-selector-container{
+			justify-self: center;
+			width: 95%;
+			height: 0px;
+			border-radius: 5px;
+			box-sizing: border-box;
+			background-color: $boardColor;
+			box-shadow: 5px 5px darken($lineColor, 10%);
+			position: relative;
+			z-index:120;
+			@include userSelectNone();
+
+			&[list_extand=true]{
+				animation: extend_list_user .35s ease-in-out forwards;
+				-webkit-animation: extend_list_user .35s ease-in-out forwards;
+
+				p{
+					display: block;
+				}
+			}
+
+			&[list_extand=false]{
+				p{
+					display: none;
+				}
+			}
+
+			p{
+				border-radius: 5px 5px 0px 0px;
+				margin: 0;
+				padding: 5px;
+				font-family: Courier;
+				background-color: darken($boardColor, 30%);
+				color: $lineColor;
+				text-align:center;
+				@include userSelectNone();
+			}
+
+			#list-user-container{
+				display: none;
+				position: absolute;
+				left: 0;
+				width: 100%;
+				@include userSelectNone();
+
+				#list-user{
+					list-style-type: none;
+					margin: 0;
+					padding: 0;
+
+					.list-user-item{
+						height: 60px;
+						padding: 16px 15px 10px 15px;
+						font-size: 1.2em;
+						color: $lineColor;
+						cursor: pointer;
+						@include userSelectNone();
+						transition: all .1s ease-in-out;
+
+						&:hover:not(.selected){
+							background-color: darken($boardColor, 15%);
+						}
+
+						&.selected{
+							background-color: darken($boardColor, 20%);
+							font-weight: bold;
+						}
+					}
+				}
+			}
+
+			#lobby-notification{
+				display: none;
+				flex-direction: column;
+				align-items: center;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 130;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				background-color: rgba(0,0,0,0.3);
+
+				&[action=show]{
+					animation: fadeIn .2s ease-in-out forwards;
+					-webkit-animation: fadeIn .2s ease-in-out forwards;
+				}
+
+				&[action=hide]{
+					animation: fadeOut .2s ease-in-out forwards;
+					-webkit-animation: fadeOut .2s ease-in-out forwards;
+				}
+
+				&[animation=send_request]{
+					#lobby-animation #send-game-request{
+						display: inline;
+					}
+					#lobby-animation #receive-game-request{
+						display: none;
+					}
+				}
+
+				&[animation=receive_request]{
+					#lobby-animation #send-game-request{
+						display: none;
+					}
+					#lobby-animation #receive-game-request{
+						display: inline;
+					}
+				}
+
+				#lobby-animation{
+					width: 220px;
+					height: 220px;
+					margin-top: 20px;
+					margin-bottom: 50px;
+
+					#send-game-request, #receive-game-request{
+						display: none;
+					}
+				}
+
+				#notification-info{
+					width: 100%;
+					text-align:center;
+					color: #772c2c;
+					font-size: 2.2em;
+					font-weight: bold;
+					font-family: Courier;
+					@include userSelectNone();
+
+					animation: move_lobby_notification 5s ease-in-out infinite;
+					-webkit-animation: move_lobby_notification 5s ease-in-out infinite;
+				}
+			}
+		}
+
+		#btn-container{
+			display: none;
+			z-index: 110;
+			justify-self: center;
+			flex-direction: row;
+			position: relative;
+			top: -70px;
+			margin-top: 15px;
+			@include userSelectNone();
+
+
+			&[action=hide]{
+				animation: hide_btn_container .2s ease-in-out forwards;
+				-webkit-animation: hide_btn_container .2s ease-in-out forwards;
+			}
+
+			&[action=show]{
+				animation: show_btn_container .2s ease-in-out forwards;
+				-webkit-animation: show_btn_container .2s ease-in-out forwards;
+			}
+
+			&[button_display=play]{
+				#play-btn{
+					display: block;
+				}
+				#cancel-btn, #accept-btn, #decline-btn{
+					display: none;
+				}
+			}
+
+			&[button_display=cancel]{
+				#cancel-btn{
+					display: block;
+				}
+				#play-btn, #accept-btn, #decline-btn{
+					display: none;
+				}
+			}
+
+			&[button_display=accept-decline]{
+				#accept-btn, #decline-btn{
+					display: block
+				}
+				#cancel-btn, #play-btn{
+					display: none;
+				}
+			}
+
+
+			.btn-lobby{
+				height: 40px;
+				width: 120px;
+				background-color: $boardColor;
+				border: 1px solid darken($lineColor, 20%);
+				box-shadow: 3px 3px darken($lineColor, 10%);
+				border-radius: 4px;
+				color: darken($lineColor, 20%);
+				font-size: 1em;
+				font-weight: bold;
+				cursor: pointer;
+				@include userSelectNone();
+
+				&:hover{
+					background-color: darken($boardColor, 10%);
+				}
+
+				&:active{
+					background-color: darken($boardColor, 30%);
+				}
+
+				&#accept-btn{
+					background-color: #2ecc71;
+					margin-right: 4px;
+
+					&:hover{
+						background-color: darken(#2ecc71, 10%);
+					}
+
+					&:active{
+						background-color: darken(#2ecc71, 20%);
+					}
+				}
+
+				&#decline-btn{
+					background-color: #e74c3c;
+					color: lighten($boardColor, 10%);
+
+					&:hover{
+						background-color: darken(#e74c3c, 10%);
+					}
+
+					&:active{
+						background-color: darken(#e74c3c, 20%);
+					}
+				}
+			}
+
+
+		}
+	}
+
+
+}

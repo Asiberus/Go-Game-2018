@@ -1,0 +1,83 @@
+@keyframes show_index_container{
+	from {opacity:0; margin-top: -10px}
+	to {opacity: 1; margin-top: 0px}
+}
+
+@keyframes hide_index_background{
+	from {top: 0px}
+	to {top: 100vh}
+}
+
+#index-background{
+	width: 100vw;
+	height: 100vh;
+	z-index: 200;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-image: radial-gradient(circle,$lineColor, darken($lineColor, 10%));
+
+	&[show=false]{
+		animation: hide_index_background .3s ease forwards;
+		-webkit-animation: hide_index_background .3s ease forwards;
+	}
+}
+
+#index-container{
+	display: grid;
+	grid-template-columns: 600px;
+	grid-template-rows: auto;
+	place-content: center;
+	justify-items: center;
+	grid-row-gap: 0px;
+	height: 100%;
+	opacity: 0;
+
+	animation: show_index_container 3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+	-webkit-animation: show_index_container 3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+	#index-title{
+		font-family: Impact, Helvetica;
+		font-size: 7em;
+		transform: rotate(-7deg);
+		margin-top: -100px;
+		color: $boardColor;
+		text-shadow: 10px 10px darken($lineColor, 10%);
+		@include userSelectNone();
+
+	}
+
+	#index-input{
+		box-sizing: border-box;
+		background: transparent;
+		color: #888;
+		border: 0;
+		border-bottom: 2px solid #666;
+		padding: 8px;
+		height: 35px;
+		font-size: 1.5em;
+
+		transition: all .2s;
+
+		&:focus{
+			border-bottom-color: $boardColor;
+			color: $boardColor;
+		}
+	}
+
+	#index-input-error{
+		color: $boardColor;
+		font-size: 1.1em;
+		margin-top: 15px;
+		opacity: 0;
+		transition: all .5s ease-in-out;
+
+		&[error=true]{
+			opacity: 1;
+		}
+
+		&[error=false]{
+			opacity: 0;
+		}
+	}
+}

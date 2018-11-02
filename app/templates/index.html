@@ -1,0 +1,133 @@
+{% load static %}
+{% load sass_tags %}
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Go Game</title>
+
+    <link rel="stylesheet" href="{% sass_src 'scss/style.scss' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+<body>
+    <div id="main-container">
+        <div id="index-background">
+            <div id="index-container">
+                <h1 id="index-title">Go Game</h1>
+                <input type="text" placeholder="Enter a name" id="index-input">
+                <div id="index-input-error" error="false">Name already taken</div>
+            </div>
+        </div>
+
+        <div id="app-wrapper">
+            <div id="top-bar">
+                <div id="main-title">Go Game</div>
+                <div id="user-name"></div>
+            </div>
+
+            <div id="app-container">
+                <div id="player-container" show="">
+                    <div class="player" id="player-user" color="" isPlaying="true">
+                        <div class="player-title">
+                            <h3 class="player-name">Player 1</h3>
+                            <div class="player-color"></div>
+                        </div>
+                        <div class="player-info">
+                            <div class="nb-token-container">
+                                Token played : <span class="nb-token bold">0</span>
+                            </div>
+                            <div id="pass-button">
+                                Click to Pass
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player" id="player-enemy" color="" isPlaying="false">
+                        <div class="player-title">
+                            <h3 class="player-name">Player 1</h3>
+                            <div class="player-color"></div>
+                        </div>
+                        <div class="player-info">
+                            <div class="nb-token-container">
+                                Token played : <span class="nb-token bold">0</span>
+                            </div>
+                            <div id="enemy-passed" hasPassed="false">
+                                Enemy Has Passed!
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="game-container">
+                    <div id="lobby-container">
+                        <div id="lobby">
+                            <h1 id="lobby-title" list_extand="false">Start a game</h1>
+                            <div id="lobby-selector-container" list_extand="false">
+                                <p>Choose your opponent</p>
+                                <div id="lobby-notification" action="" animation="">
+                                    <div id="lobby-animation">
+                                        <img id="send-game-request" src="{% static 'assets/svg/rings.svg' %}" width="220" alt="send_request_animation">
+                                        <img id="receive-game-request" src="{% static 'assets/svg/puff.svg' %}" width="220" alt="receive-request-animation">
+                                    </div>
+                                    <div id="notification-info"></div>
+
+                                </div>
+                                <div id="list-user-container">
+                                    <ul id="list-user"></ul>
+                                </div>
+                            </div>
+
+                            <div id="btn-container" action="" button_display="">
+                                <button type="button" class="btn-lobby" id="play-btn">Play</button>
+                                <button type="button" class="btn-lobby" id="cancel-btn" hidden>Cancel</button>
+                                <button type="button" class="btn-lobby" id="accept-btn" hidden>Accept</button>
+                                <button type="button" class="btn-lobby" id="decline-btn" hidden>Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="board-notification-container" action="show" gameFinished="false">
+                        <div id="board-notification">
+                            <div id="board-notification-message"></div>
+                            <div id="board-notification-counter">
+                                <div class="player-counter-container" id="bord-notification-counter-user">
+                                    <div class="player-color"></div>
+                                    <div class="player-name"></div>
+                                    <div class="player-score">0</div>
+                                </div>
+                                <div class="player-counter-container" id="bord-notification-counter-enemy">
+                                    <div class="player-color"></div>
+                                    <div class="player-name"></div>
+                                    <div class="player-score">0</div>
+                                </div>
+                            </div>
+                            <div id="board-notification-btn-container">
+                                <button type="button" class="board-notification-btn" id="notification-white-btn">White</button>
+                                <button type="button" class="board-notification-btn" id="notification-black-btn">Black</button>
+                                <button type="button" class="board-notification-btn" id="notification-confirm-btn">Yes!</button>
+                                <button type="button" class="board-notification-btn" id="notification-cancel-btn">Oh No!</button>
+                                <button type="button" class="board-notification-btn" id="notification-lobby-btn">Lobby<i class="fas fa-angle-right"></i></button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="board-container"></div>
+                </div>
+                <div id="chat-container" >
+                    <h3 id="chat-title">CHAT : <span id="chat-title-info">Lobby</span></h3>
+                    <div class="message-container" id="lobby-message"></div>
+                    <div class="message-container" id="game-message" hidden></div>
+                    <div id="chat-input">
+                        <input type="text" placeholder="Send a message">
+                        <button type="button" id="send-button"><span class="fas fa-paper-plane"></span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="footer">
+                Created by Raphael Beekmann - v1.0
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{% static 'js/dist/goProject.bundle.js' %}"></script>
+</html>
